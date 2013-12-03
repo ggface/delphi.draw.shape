@@ -1,4 +1,4 @@
-unit main;
+п»їunit main;
 
 interface
 
@@ -44,17 +44,17 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
   i: byte;
 begin
-  // Подготовка холста
+  // РџРѕРґРіРѕС‚РѕРІРєР° С…РѕР»СЃС‚Р°
   Canvas.brush.Style := bsSolid;
-  // Данные для масштаба
+  // Р”Р°РЅРЅС‹Рµ РґР»СЏ РјР°СЃС€С‚Р°Р±Р°
   cbScale.AddItem('1:1', TMyItem.Create(1));
   for i := 1 to 5 do
     cbScale.AddItem('1:' + IntToStr(2*i), TMyItem.Create(2*i));
-  // Данные для выбора цвета
-  rgColor.Items.AddObject('Красный' , TMyItem.Create(clRed));
-  rgColor.Items.AddObject('Зеленый' , TMyItem.Create(clGreen));
-  rgColor.Items.AddObject('Синий' , TMyItem.Create(clBlue));
-  // Значения по-умолчанию
+  // Р”Р°РЅРЅС‹Рµ РґР»СЏ РІС‹Р±РѕСЂР° С†РІРµС‚Р°
+  rgColor.Items.AddObject('РљСЂР°СЃРЅС‹Р№' , TMyItem.Create(clRed));
+  rgColor.Items.AddObject('Р—РµР»РµРЅС‹Р№' , TMyItem.Create(clGreen));
+  rgColor.Items.AddObject('РЎРёРЅРёР№' , TMyItem.Create(clBlue));
+  // Р—РЅР°С‡РµРЅРёСЏ РїРѕ-СѓРјРѕР»С‡Р°РЅРёСЋ
   cbScale.ItemIndex := 0;
   rgColor.ItemIndex := 0;
 end;
@@ -67,9 +67,9 @@ const
 var
   Scale: integer;
 begin
-  // Получаем масштаб
+  // РџРѕР»СѓС‡Р°РµРј РјР°СЃС€С‚Р°Р±
   Scale := (cbScale.Items.Objects[cbScale.ItemIndex] as TMyItem).Value;
-    // Рисуем
+    // Р РёСЃСѓРµРј
   Canvas.Ellipse((Width div 2) - (Radius * Scale),(Height div 2) - (Radius * Scale),
     (Width div 2) + (Radius * Scale), (Height div 2) + (Radius * Scale));
 end;
@@ -87,9 +87,9 @@ end;
 
 procedure TForm1.SetShapeColor(value: integer);
 begin
-  // Цвет границы
+  // Р¦РІРµС‚ РіСЂР°РЅРёС†С‹
   Canvas.Pen.Color:=value;
-  // Цвет заливки
+  // Р¦РІРµС‚ Р·Р°Р»РёРІРєРё
   Canvas.brush.Color:=value;
 end;
 
