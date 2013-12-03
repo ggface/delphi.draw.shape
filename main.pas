@@ -7,7 +7,7 @@ uses
   Dialogs, StdCtrls, ExtCtrls;
 
 type
-  TForm1 = class(TForm)
+  TMainForm = class(TForm)
     Label1: TLabel;
     cbScale: TComboBox;
     rgColor: TRadioGroup;
@@ -23,7 +23,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  MainForm: TMainForm;
 
 implementation
 
@@ -35,12 +35,12 @@ type
      constructor Create(value: integer);
   end;
 
-procedure TForm1.cbScaleChange(Sender: TObject);
+procedure TMainForm.cbScaleChange(Sender: TObject);
 begin
   Refresh;
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TMainForm.FormCreate(Sender: TObject);
 var
   i: byte;
 begin
@@ -61,7 +61,7 @@ end;
 
 
 
-procedure TForm1.FormPaint(Sender: TObject);
+procedure TMainForm.FormPaint(Sender: TObject);
 const
   Radius: integer = 25;
 var
@@ -74,18 +74,18 @@ begin
     (Width div 2) + (Radius * Scale), (Height div 2) + (Radius * Scale));
 end;
 
-procedure TForm1.FormResize(Sender: TObject);
+procedure TMainForm.FormResize(Sender: TObject);
 begin
   Refresh;
 end;
 
-procedure TForm1.rgColorClick(Sender: TObject);
+procedure TMainForm.rgColorClick(Sender: TObject);
 begin
   SetShapeColor((rgColor.Items.Objects[rgColor.ItemIndex] as TMyItem).Value);
   Refresh;
 end;
 
-procedure TForm1.SetShapeColor(value: integer);
+procedure TMainForm.SetShapeColor(value: integer);
 begin
   // Цвет границы
   Canvas.Pen.Color:=value;

@@ -2,12 +2,12 @@ program task1;
 
 uses
   Forms,
-  main in 'main.pas' {Form1};
+  main in 'main.pas' {MainForm};
 
 {$R *.res}
 
 begin
   Application.Initialize;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.
