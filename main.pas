@@ -12,12 +12,10 @@ type
     cbScale: TComboBox;
     rgColor: TRadioGroup;
     procedure FormPaint(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure cbScaleChange(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure rgColorClick(Sender: TObject);
   private
-    procedure SetShapeColor(value: integer);
   public
     { Public declarations }
   end;
@@ -29,75 +27,69 @@ implementation
 
 {$R *.dfm}
 
-type
-  TMyItem = class
-     Value: integer;
-     constructor Create(value: integer);
-  end;
-
+// Обработчик при изменении масштаба
 procedure TMainForm.cbScaleChange(Sender: TObject);
 begin
+// просто перерибуем форму
   Refresh;
 end;
 
-procedure TMainForm.FormCreate(Sender: TObject);
-var
-  i: byte;
-begin
-  // Подготовка холста
-  Canvas.brush.Style := bsSolid;
-  // Данные для масштаба
-  cbScale.AddItem('1:1', TMyItem.Create(1));
-  for i := 1 to 5 do
-    cbScale.AddItem('1:' + IntToStr(2*i), TMyItem.Create(2*i));
-  // Данные для выбора цвета
-  rgColor.Items.AddObject('Красный' , TMyItem.Create(clRed));
-  rgColor.Items.AddObject('Зеленый' , TMyItem.Create(clGreen));
-  rgColor.Items.AddObject('Синий' , TMyItem.Create(clBlue));
-  // Значения по-умолчанию
-  cbScale.ItemIndex := 0;
-  rgColor.ItemIndex := 0;
-end;
-
-
-
+// Обработчик при перерисовке формы
 procedure TMainForm.FormPaint(Sender: TObject);
 const
-  Radius: integer = 25;
+  Radius: integer = 25; // Радиус круга будет 25 пикселей
 var
-  Scale: integer;
+  Scale: integer; // Переменная для масштаба
+  LeftTopX, LeftTopY: integer; // Для левой верхней точки
+  RightBottomX, RightBottomY: integer; // Для правой нижней точки
 begin
+// Определяем цвет
+
+if rgColor.ItemIndex = 0 then // Если выбран красный
+begin
+  Canvas.Pen.Color:= clRed; // Цвет границы круга
+  Canvas.brush.Color:=clRed;  // Цвет заливки круга
+end;
+
+if rgColor.ItemIndex = 1 then // Если выбран зеленый
+begin
+  Canvas.Pen.Color:= clGreen;
+  Canvas.brush.Color:=clGreen;
+end;
+
+if rgColor.ItemIndex = 2 then // Если выбран синий
+begin
+  Canvas.Pen.Color:= clBlue;
+  Canvas.brush.Color:=clBlue;
+end;
+
   // Получаем масштаб
-  Scale := (cbScale.Items.Objects[cbScale.ItemIndex] as TMyItem).Value;
-    // Рисуем
-  Canvas.Ellipse((Width div 2) - (Radius * Scale),(Height div 2) - (Radius * Scale),
-    (Width div 2) + (Radius * Scale), (Height div 2) + (Radius * Scale));
+  if (cbScale.ItemIndex = 0) then
+    Scale := 1 // Если выбран верхний элемент 1:1
+    else
+    Scale := cbScale.ItemIndex + 1; // Если выбран любой другой элемент
+
+    // Получим X и Y левой верхней точки
+    LeftTopX := (MainForm.Width div 2) - (Radius * Scale);
+    LeftTopY := (MainForm.Height div 2) - (Radius * Scale);
+     // Получим X и Y правой нижней точки
+    RightBottomX := (Width div 2) + (Radius * Scale);
+    RightBottomY :=  (Height div 2) + (Radius * Scale);
+    //Рисуем круг
+  Canvas.Ellipse(LeftTopX, LeftTopY, RightBottomX, RightBottomY);
 end;
 
 procedure TMainForm.FormResize(Sender: TObject);
 begin
+// При изменении размера формы перерисуем ее.
   Refresh;
 end;
 
+// Событие при смене цвета
 procedure TMainForm.rgColorClick(Sender: TObject);
 begin
-  SetShapeColor((rgColor.Items.Objects[rgColor.ItemIndex] as TMyItem).Value);
+// Перерисуем форму
   Refresh;
-end;
-
-procedure TMainForm.SetShapeColor(value: integer);
-begin
-  // Цвет границы
-  Canvas.Pen.Color:=value;
-  // Цвет заливки
-  Canvas.brush.Color:=value;
-end;
-
-{ TMyItem }
-
-constructor TMyItem.Create(value: integer);
-begin
-   self.Value := value;
 end;
 
 end.

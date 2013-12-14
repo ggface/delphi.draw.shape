@@ -13,7 +13,6 @@ object MainForm: TMainForm
   OldCreateOrder = False
   Position = poScreenCenter
   Scaled = False
-  OnCreate = FormCreate
   OnPaint = FormPaint
   OnResize = FormResize
   PixelsPerInch = 96
@@ -31,9 +30,17 @@ object MainForm: TMainForm
     Width = 145
     Height = 21
     ItemHeight = 13
+    ItemIndex = 0
     TabOrder = 0
-    Text = 'cbScale'
+    Text = '1:1'
     OnChange = cbScaleChange
+    Items.Strings = (
+      '1:1'
+      '1:2'
+      '1:3'
+      '1:4'
+      '1:5'
+      '1:6')
   end
   object rgColor: TRadioGroup
     Left = 8
@@ -41,6 +48,11 @@ object MainForm: TMainForm
     Width = 145
     Height = 99
     Caption = #1062#1074#1077#1090
+    ItemIndex = 0
+    Items.Strings = (
+      #1050#1088#1072#1089#1085#1099#1081
+      #1047#1077#1083#1077#1085#1099#1081
+      #1057#1080#1085#1080#1081)
     TabOrder = 1
     OnClick = rgColorClick
   end
