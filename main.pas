@@ -27,13 +27,6 @@ implementation
 
 {$R *.dfm}
 
-// Обработчик при изменении масштаба
-procedure TMainForm.cbScaleChange(Sender: TObject);
-begin
-// просто перерибуем форму
-  Refresh;
-end;
-
 // Обработчик при перерисовке формы
 procedure TMainForm.FormPaint(Sender: TObject);
 const
@@ -79,9 +72,10 @@ end;
   Canvas.Ellipse(LeftTopX, LeftTopY, RightBottomX, RightBottomY);
 end;
 
+// Событие при изменении размера формы
 procedure TMainForm.FormResize(Sender: TObject);
 begin
-// При изменении размера формы перерисуем ее.
+ //перерисуем форму.
   Refresh;
 end;
 
@@ -89,6 +83,13 @@ end;
 procedure TMainForm.rgColorClick(Sender: TObject);
 begin
 // Перерисуем форму
+  Refresh;
+end;
+
+// Обработчик при изменении масштаба
+procedure TMainForm.cbScaleChange(Sender: TObject);
+begin
+// просто перериcуем форму
   Refresh;
 end;
 
